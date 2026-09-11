@@ -7,7 +7,12 @@ dopamine, one more brain — wired to feel everything the couple does and given 
 use. He sits in the chair. His descending neurons fire into nothing. His turn never comes,
 and the counter that would record it is never written to.
 
-Live at **[cuckfly.tech](https://www.cuckfly.tech/)**.
+Live at **[cuckfly.netlify.app](https://cuckfly.netlify.app/)**.
+
+`cuckfly.tech` is already configured as the site's custom domain on Netlify — it goes live
+as soon as the domain's DNS points at Netlify (`A 75.2.60.5`, or the Netlify name servers).
+When it does, swap the four social URLs at the top of `index.html` from `cuckfly.netlify.app`
+to `cuckfly.tech`; they are marked with a comment.
 
 ---
 
@@ -73,6 +78,12 @@ python3 -m http.server 8899
 
 Then open <http://localhost:8899/>. `window.CF` exposes `{ X, brains, frame }` for poking at
 the state from the console.
+
+Deploying:
+
+```bash
+netlify deploy --prod --dir .
+```
 
 ## Credits
 
