@@ -305,11 +305,10 @@
   /* ------------------------------------------------------------------ */
   /* the loop                                                            */
   /* ------------------------------------------------------------------ */
-  var last = performance.now(), acc = 0, fps = 60, heartT = 0;
+  var last = performance.now(), acc = 0;
 
   function frame(now) {
     var dt = Math.min(0.05, (now - last) / 1000); last = now;
-    fps = lerp(fps, 1 / Math.max(dt, 1e-4), 0.05);
     X.lived += dt;
     if (mkt) mkt.step(dt);
 
@@ -360,7 +359,6 @@
     c.stand = clamp(c.stand * (1 - dt * 1.4) + c.hope * 0.5, 0, 1);
     c.halfStand = clamp(c.halfStand - dt * 0.6, 0, 1);
     c.bpm = lerp(c.bpm, 92 + c.arousal * 96 + c.humil * 34, dt * 1.5);
-    heartT += dt;
     if (c.tears > 0.5 && Math.random() < dt * 6) {
       var rq = bcv.parentElement.getBoundingClientRect();
       spark(rq.width * 0.82, rq.height * 0.52, 'tear');
@@ -465,8 +463,6 @@
       ].filter(Boolean).join(' &middot; ');
 
       $('viewersTop').textContent = X.viewers + ' watching · 1 of them in a chair';
-      $('footPerf').textContent = Math.round(fps) + ' fps · ' + (N * 3).toLocaleString() +
-        ' units drawn · scaled from 3 × 138,639';
     }
     requestAnimationFrame(frame);
   }

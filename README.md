@@ -39,7 +39,8 @@ js/flyart.js        fly + chair renderer, shared with the graphics generator
 js/brain.js         neuron cloud: generation, spiking, projection
 js/market.js        GeckoTerminal reader, with a simulated tape until launch
 js/app.js           state, the trade→sense map, the loop, the panel
-ARTICLE.txt         the long-form piece, plain text, ready to paste into X
+ARTICLE.txt         the long-form piece, plain text (edit this one)
+ARTICLE-X.txt       the same piece with Unicode bold, rules and bullets — paste this
 tools/banner.html   regenerates static/banner.png, og.png and pfp.png
 static/             banner (1500×500), og card (1200×630), profile picture (400×400)
 netlify.toml
@@ -63,6 +64,22 @@ window.CUCKFLY_CFG = {
 With `pool` empty the market section runs a simulated tape and says so, in the panel and in
 the About page. With `pool` set, `js/market.js` polls GeckoTerminal every nine seconds and
 every real trade lands in three brains.
+
+## The article
+
+`ARTICLE.txt` is the source. `ARTICLE-X.txt` is what you paste: X posts have no bold button,
+so headings, the market-event keys and the key lines are converted to Unicode Mathematical
+Sans-Serif Bold, which survives a paste into X, Telegram, Discord and Notion. Rebuild it
+after any edit:
+
+```bash
+python3 tools/build-x-article.py
+```
+
+Two things to know about that trick: screen readers announce those glyphs character by
+character or skip them, and X's search does not index them as the plain words. At ~14,000
+characters the piece fits a single long post on X Premium; without Premium it needs to be a
+thread.
 
 ## Regenerating the graphics
 

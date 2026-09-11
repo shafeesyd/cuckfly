@@ -97,8 +97,7 @@ details p{margin:10px 0 0;line-height:1.55}
 .legend div{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center}
 .legend s{display:block;width:10px;height:10px;text-decoration:none}
 .legend em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
-.foot{color:var(--dim);font-size:10.5px;line-height:1.5;margin-top:auto;padding:12px 16px;letter-spacing:.04em}
-.foot b{color:var(--muted);font-weight:600}
+.foot{font-size:11px;line-height:1.5;margin-top:auto;padding:12px 16px;letter-spacing:.06em}
 .foot a{color:var(--cuck);text-decoration:none}
 .foot a:hover{text-decoration:underline}
 
