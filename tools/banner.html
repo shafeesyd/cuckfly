@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CUCK FLY — graphics generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body{background:#111;color:#ccc;font:13px monospace;padding:20px}
+  canvas{display:block;margin:14px 0;max-width:100%;border:1px solid #333}
+</style>
+</head>
+<body>
+<div id="log">loading font…</div>
+<canvas id="banner" width="1500" height="500"></canvas>
+<canvas id="og" width="1200" height="630"></canvas>
+<canvas id="pfp" width="400" height="400"></canvas>
+<script src="../js/flyart.js"></script>
+<script>
+var TAU = 6.2831853;
+
+/* ---------- shared scene bits ---------- */
+function bg(ctx, W, H, tilt) {
+  ctx.fillStyle = '#05030a';
+  ctx.fillRect(0, 0, W, H);
+  var g = ctx.createRadialGradient(W * 0.62, H * 0.42, 10, W * 0.62, H * 0.42, W * 0.72);
+  g.addColorStop(0, '#4a0f3c');
+  g.addColorStop(0.42, '#2a0a2e');
+  g.addColorStop(1, '#05030a');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  /* cold pool where the chair sits */
+  var c = ctx.createRadialGradient(W * 0.86, H * 0.66, 6, W * 0.86, H * 0.66, W * 0.3);
+  c.addColorStop(0, 'rgba(24,90,70,.5)');
+  c.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = c; ctx.fillRect(0, 0, W, H);
+  /* vignette */
+  var v = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, W * 0.75);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(1, 'rgba(0,0,0,.75)');
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  /* scanlines, very light */
+  ctx.fillStyle = 'rgba(0,0,0,.16)';
+  for (var y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
+}
+
+function hearts(ctx, x, y, s, n, col) {
+  ctx.save();
+  ctx.textAlign = 'center';
+  for (var i = 0; i < n; i++) {
+    var a = (i / n) * TAU + 0.7;
+    var hx = x + Math.cos(a) * s * (0.5 + (i % 3) * 0.25);
+    var hy = y - Math.abs(Math.sin(a)) * s * 0.9 - i * s * 0.1;
+    var sz = s * (0.16 + (i % 3) * 0.05);
+    ctx.font = sz + 'px system-ui, sans-serif';
+    ctx.shadowColor = col; ctx.shadowBlur = sz * 0.9;
+    ctx.fillStyle = col;
+    ctx.globalAlpha = 0.55 + (i % 3) * 0.15;
+    ctx.fillText('♥', hx, hy);
+  }
+  ctx.restore();
+}
+
+/* couple + chair, positioned inside a box */
+function scene(ctx, cx, cy, s, opts) {
+  opts = opts || {};
+  /* the couple */
+  FlyArt.shadow(ctx, cx - s * 0.1, cy + s * 0.5, s * 1.25, s * 0.2, 0.55);
+  FlyArt.drawFly(ctx, { x: cx, y: cy, s: s, phase: 0.6, tilt: 0.03 });
+  FlyArt.drawFly(ctx, {
+    x: cx - s * 0.02, y: cy - s * 0.55, s: s * 0.9, phase: 1.9,
+    tilt: 0.12, legLift: 0.55, wingBeat: 1.1
+  });
+  hearts(ctx, cx + s * 0.15, cy - s * 1.0, s, 5, '#ff4f9a');
+
+  /* the chair, to the right */
+  if (opts.chair !== false) {
+    var ox = cx + s * (opts.gap || 2.5), oy = cy + s * 0.08, cs = s * 1.3;
+    FlyArt.shadow(ctx, ox, oy + cs * 0.8, cs * 1.35, cs * 0.22, 0.6);
+    FlyArt.drawChair(ctx, ox, oy, cs, 'rgba(125,255,196,.3)');
+    FlyArt.drawFly(ctx, {
+      x: ox + cs * 0.10, y: oy - cs * 0.34, s: s * 0.86,
+      phase: 2.2, seated: 1, tilt: 0.3, headTilt: -0.2, tint: 0.6, flip: true
+    });
+    /* one green heart, cracked down the middle */
+    hearts(ctx, ox - cs * 0.1, oy - cs * 1.25, s * 0.8, 2, '#7dffc4');
+  }
+}
+
+/* pixel title with a chromatic glow, like an old arcade marquee */
+function title(ctx, text, x, y, size, align) {
+  ctx.save();
+  ctx.font = size + 'px "Press Start 2P", monospace';
+  ctx.textAlign = align || 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.shadowColor = 'rgba(255,60,170,.85)'; ctx.shadowBlur = size * 0.75;
+  ctx.fillStyle = '#ff2f9f'; ctx.fillText(text, x, y);
+  ctx.shadowBlur = size * 0.35;
+  ctx.fillStyle = '#ff77c8'; ctx.fillText(text, x, y);
+  /* green fringe, offset — the third one is always slightly out of frame */
+  ctx.shadowColor = 'rgba(125,255,196,.6)'; ctx.shadowBlur = size * 0.5;
+  ctx.globalAlpha = 0.5;
+  ctx.fillStyle = '#7dffc4'; ctx.fillText(text, x + size * 0.055, y + size * 0.045);
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#fff2fa'; ctx.fillText(text, x - size * 0.02, y - size * 0.02);
+  ctx.restore();
+}
+
+function line(ctx, text, x, y, size, col, weight, align) {
+  ctx.save();
+  ctx.font = (weight || 600) + ' ' + size + 'px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif';
+  ctx.textAlign = align || 'left';
+  ctx.fillStyle = col;
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+/* ---------- the three deliverables ---------- */
+function drawBanner() {
+  var cv = document.getElementById('banner'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  bg(ctx, W, H);
+  scene(ctx, W * 0.555, H * 0.70, H * 0.195, { gap: 3.1 });
+  title(ctx, 'CUCK FLY', 64, H * 0.42, 54);
+  line(ctx, 'three whole fly brains, live', 66, H * 0.60, 27, '#ffffff', 700);
+  line(ctx, 'two of them fucking · one of them watching', 66, H * 0.70, 18, '#b39ec0', 500);
+  line(ctx, 'buys make them go harder · his turn never comes', 66, H * 0.785, 16, '#7d6b8c', 500);
+  post('banner', cv);
+}
+
+function drawOg() {
+  var cv = document.getElementById('og'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  bg(ctx, W, H);
+  scene(ctx, W * 0.33, H * 0.80, H * 0.145, { gap: 3.1 });
+  title(ctx, 'CUCK FLY', W / 2, H * 0.235, 58, 'center');
+  line(ctx, 'three whole fly brains, live', W / 2, H * 0.335, 28, '#ffffff', 700, 'center');
+  line(ctx, 'two of them are fucking. the third one is in the chair.', W / 2, H * 0.405, 20, '#b39ec0', 500, 'center');
+  line(ctx, 'cuckfly.tech', W - 44, H * 0.955, 18, '#7dffc4', 600, 'right');
+  post('og', cv);
+}
+
+function drawPfp() {
+  var cv = document.getElementById('pfp'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.fillStyle = '#07040c'; ctx.fillRect(0, 0, W, H);
+  var g = ctx.createRadialGradient(W * 0.5, H * 0.45, 8, W * 0.5, H * 0.5, W * 0.7);
+  g.addColorStop(0, '#123a30'); g.addColorStop(0.5, '#16092a'); g.addColorStop(1, '#07040c');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  var s = H * 0.235, cs = s * 1.45;
+  FlyArt.shadow(ctx, W * 0.5, H * 0.60 + cs * 0.82, cs * 1.3, cs * 0.22, 0.6);
+  FlyArt.drawChair(ctx, W * 0.5, H * 0.60, cs, 'rgba(125,255,196,.35)');
+  FlyArt.drawFly(ctx, {
+    x: W * 0.5 + cs * 0.12, y: H * 0.60 - cs * 0.36, s: s,
+    phase: 2.2, seated: 1, tilt: 0.3, headTilt: -0.22, tint: 0.6, flip: true
+  });
+  /* vignette so the eye is the brightest thing in the circle */
+  var vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.22, W / 2, H / 2, H * 0.62);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.8)');
+  ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+  post('pfp', cv);
+}
+
+function post(name, cv) {
+  fetch('http://127.0.0.1:8898/' + name, { method: 'POST', body: cv.toDataURL('image/png') });
+}
+
+document.fonts.load('40px "Press Start 2P"').then(function () {
+  return document.fonts.ready;
+}).then(function () {
+  drawBanner(); drawOg(); drawPfp();
+  document.getElementById('log').textContent = 'rendered + posted';
+});
+</script>
+</body>
+</html>
