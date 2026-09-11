@@ -14,6 +14,8 @@
 <canvas id="banner" width="1500" height="500"></canvas>
 <canvas id="og" width="1200" height="630"></canvas>
 <canvas id="pfp" width="400" height="400"></canvas>
+<canvas id="pfpcrop" width="400" height="400"></canvas>
+<canvas id="bansafe" width="1500" height="500"></canvas>
 <script src="../js/flyart.js"></script>
 <script>
 var TAU = 6.2831853;
@@ -108,15 +110,38 @@ function line(ctx, text, x, y, size, col, weight, align) {
 }
 
 /* ---------- the three deliverables ---------- */
+/* X header: 1500x500. Everything that matters stays inside the safe box —
+   the sides get trimmed on narrow screens and the avatar sits over the
+   bottom-left corner, so nothing important goes there. */
+var SAFE = { x0: 200, x1: 1330, y0: 80, y1: 430 };
+var AVATAR = { x: 150, y: 500, r: 128 };   /* the profile picture overlaps here */
+
 function drawBanner() {
   var cv = document.getElementById('banner'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
   bg(ctx, W, H);
-  scene(ctx, W * 0.555, H * 0.70, H * 0.195, { gap: 3.1 });
-  title(ctx, 'CUCK FLY', 64, H * 0.42, 54);
-  line(ctx, 'three whole fly brains, live', 66, H * 0.60, 27, '#ffffff', 700);
-  line(ctx, 'two of them fucking · one of them watching', 66, H * 0.70, 18, '#b39ec0', 500);
-  line(ctx, 'buys make them go harder · his turn never comes', 66, H * 0.785, 16, '#7d6b8c', 500);
+  scene(ctx, 880, 310, 86, { gap: 3.1 });
+  title(ctx, 'CUCK FLY', SAFE.x0 + 22, 200, 52);
+  line(ctx, 'three whole fly brains, live', SAFE.x0 + 24, 268, 27, '#ffffff', 700);
+  line(ctx, 'two of them fucking · one of them watching', SAFE.x0 + 24, 312, 18, '#b39ec0', 500);
+  line(ctx, 'buys make them go harder · his turn never comes', SAFE.x0 + 24, 352, 16, '#7d6b8c', 500);
   post('banner', cv);
+  safePreview(cv);
+}
+
+/* overlay of what X eats, so the layout can be checked rather than hoped at */
+function safePreview(src) {
+  var cv = document.getElementById('bansafe'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.drawImage(src, 0, 0);
+  ctx.fillStyle = 'rgba(255,0,0,.3)';
+  ctx.fillRect(0, 0, SAFE.x0, H); ctx.fillRect(SAFE.x1, 0, W - SAFE.x1, H);
+  ctx.fillRect(SAFE.x0, 0, SAFE.x1 - SAFE.x0, SAFE.y0);
+  ctx.fillRect(SAFE.x0, SAFE.y1, SAFE.x1 - SAFE.x0, H - SAFE.y1);
+  ctx.fillStyle = 'rgba(255,220,0,.45)';
+  ctx.beginPath(); ctx.arc(AVATAR.x, AVATAR.y, AVATAR.r, 0, TAU); ctx.fill();
+  ctx.strokeStyle = '#0ff'; ctx.lineWidth = 3;
+  ctx.strokeRect(SAFE.x0, SAFE.y0, SAFE.x1 - SAFE.x0, SAFE.y1 - SAFE.y0);
+  post('banner_safe', cv);
 }
 
 function drawOg() {
@@ -139,35 +164,52 @@ function drawPfp() {
   g.addColorStop(0.7, '#200a28'); g.addColorStop(1, '#07040c');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-  /* the couple, big and cropped, exactly the framing of theirs */
-  var s = H * 0.30, gx = W * 0.40, gy = H * 0.62;
+  /* everything lives inside the circle X crops to: r = 0.47 * W from centre */
+  var s = H * 0.23, gx = W * 0.315, gy = H * 0.47;
+
+  /* the couple */
   FlyArt.shadow(ctx, gx - s * 0.1, gy + s * 0.52, s * 1.2, s * 0.2, 0.5);
   FlyArt.drawFly(ctx, { x: gx, y: gy, s: s, phase: 0.6, tilt: 0.03 });
   FlyArt.drawFly(ctx, {
     x: gx - s * 0.03, y: gy - s * 0.56, s: s * 0.9, phase: 1.9,
     tilt: 0.12, legLift: 0.55, wingBeat: 1.1
   });
-  hearts(ctx, gx + s * 0.1, gy - s * 1.24, s, 3, '#ff4f9a');
+  hearts(ctx, gx + s * 0.16, gy - s * 1.3, s * 0.92, 3, '#ff4f9a');
 
-  /* and the one watching: in the near corner, in shadow, green-eyed */
-  var cs = s * 0.82, cx = W * 0.90, cy = H * 0.94;
+  /* the one watching — big enough to read, and well inside the crop */
+  var cfs = H * 0.175, cs = cfs * 1.24, cx = W * 0.72, cy = H * 0.715;
+  var hg = ctx.createRadialGradient(cx - cs * 0.3, cy - cs * 0.5, 2, cx - cs * 0.3, cy - cs * 0.5, cs * 1.5);
+  hg.addColorStop(0, 'rgba(80,255,190,.26)'); hg.addColorStop(1, 'rgba(80,255,190,0)');
+  ctx.fillStyle = hg; ctx.fillRect(0, 0, W, H);
+  FlyArt.shadow(ctx, cx, cy + cs * 0.78, cs * 1.25, cs * 0.2, 0.5);
   ctx.save();
-  ctx.globalAlpha = 0.5;                       /* the chair stays in the dark */
+  ctx.globalAlpha = 0.72;
   FlyArt.drawChair(ctx, cx, cy, cs, null);
   ctx.restore();
-  var hg = ctx.createRadialGradient(cx - cs * 0.35, cy - cs * 0.45, 2, cx - cs * 0.35, cy - cs * 0.45, cs * 1.1);
-  hg.addColorStop(0, 'rgba(90,255,190,.3)'); hg.addColorStop(1, 'rgba(90,255,190,0)');
-  ctx.fillStyle = hg; ctx.fillRect(0, 0, W, H);
   FlyArt.drawFly(ctx, {
-    x: cx + cs * 0.06, y: cy - cs * 0.36, s: s * 0.54,
+    x: cx + cs * 0.08, y: cy - cs * 0.34, s: cfs,
     phase: 2.2, seated: 1, tilt: 0.3, headTilt: -0.22, tint: 0.6, flip: true
   });
+  hearts(ctx, cx + cs * 0.05, cy - cs * 1.5, cfs * 0.7, 2, '#7dffc4');
 
-  /* vignette, so the two red eyes and the one green eye are what survives at 48px */
-  var vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.26, W / 2, H / 2, H * 0.66);
-  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.72)');
+  /* vignette: the two red eyes and the one green eye are what survives at 48px */
+  var vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.68);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.66)');
   ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
   post('pfp', cv);
+  cropPreview(cv);
+}
+
+/* what X actually shows: the inscribed circle */
+function cropPreview(src) {
+  var cv = document.getElementById('pfpcrop'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#15181d'; ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  ctx.beginPath(); ctx.arc(W / 2, H / 2, W / 2, 0, TAU); ctx.clip();
+  ctx.drawImage(src, 0, 0);
+  ctx.restore();
+  post('pfp_crop', cv);
 }
 
 function post(name, cv) {

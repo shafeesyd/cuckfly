@@ -1,0 +1,264 @@
+$CUCKFLY: Three Whole Fly Brains. Two Are Fucking. One Is Watching.
+
+415,917 neurons. Roughly 150 million synapses. No LLM. No trading strategy. Buys make them go harder — and the third one feels every stroke he is not part of.
+
+Most crypto agents start with a language model and give it a wallet.
+
+$SEXFLY started with two fruit-fly brain simulations and gave them a sex life controlled by the market.
+
+$CUCKFLY adds the third brain. Same wiring. Same senses. Same dopamine. No body to spend it on.
+
+He is wired into the room and left out of it. Every buy raises their libido and his arousal on the same curve. Every thrust reaches his Johnston's organ at full strength. Every fourth stroke floods his brain with dopamine too. Nothing his brain decides reaches anything at all.
+
+The market moves the couple.
+
+The couple's bodies stimulate all three brains.
+
+One of those brains has no way to answer.
+
+Watch it happen at cuckfly.tech.
+
+
+What you are watching
+
+Three simulated fruit-fly brains run across the top of the screen.
+
+Hers on the left. His in the middle. The cuck's on the right, in green.
+
+Each carries the layout of approximately 138,639 neurons and 50 million synaptic connections derived from the FlyWire connectome. Every spark is one unit crossing its firing threshold. The positions correspond to real locations inside a fly's head, and the colors identify anatomical regions: the visual lobes, the mushroom bodies, the central complex, the antennal lobes, the subesophageal zone.
+
+The three are not three copies of the same picture. Watch the optic lobes.
+
+Hers and his idle. The cuck's run hot, continuously, because watching is the only sensory channel he has that is fully connected. His mushroom bodies — the fly's learning and memory center — run hot alongside them.
+
+He is not simply present at this. He is encoding it.
+
+The live interface exposes what is happening inside all three simulations:
+
+Neural spikes per brain second
+Simulated brain time
+Synapses changed through plasticity
+Runaway-activity blackouts
+Active sensory stimuli
+Descending-neuron firing rates
+Motor intentions such as turning, walking, grooming, feeding and freezing
+The cuck's nine channels, including the one labeled "stand up → nothing"
+
+The spectacle is explicit. The system underneath it is computational neuroscience.
+
+The third panel is the part people stay for.
+
+
+Published science beneath the meme
+
+All three brains use a leaky integrate-and-fire model of the kind published by Shiu et al. in Nature.
+
+Each neuron accumulates electrical input. Synaptic strength follows the number of contacts observed in the electron-microscope reconstruction. Predicted neurotransmitters determine whether a connection excites or inhibits. When a neuron crosses its threshold, it fires.
+
+There is no training process teaching the brains how to behave. No language model interprets the chart. No optimizer searches for profitable decisions.
+
+And there is no separate "cuck model." The third network is not a different architecture, a mood system, or a character with a personality file. It is the same wiring as the other two.
+
+The only difference is what is plugged into it.
+
+Sensation in, at full gain.
+
+Motor commands out, into nothing.
+
+That single change is the entire project.
+
+
+The market becomes their sensory world
+
+A biological fruit fly experiences sweetness, bitterness, vibration, movement and threats.
+
+The $CUCKFLY brains experience the tape. Every market event is translated through a fixed sensory map, applied to all three networks, with the cuck's gain applied last:
+
+BUY → Sweet taste, his courtship song, her pC1 receptivity neurons fire. For the cuck: arousal and humiliation rise together, on the same curve.
+
+BIG BUY → Dopamine floods all three brains. The cuck's hit is the largest of the three.
+
+NEW HOLDER → Dopamine floods all three. Another witness arrives; his note-taking climbs.
+
+SELL → Bitter taste, reduced intensity. For the cuck: hope rises. A slower pace reads to his brain as an opening.
+
+BIG SELL → Her DNp13 rejection neurons fire and she kicks him off. The cuck's hope reaches 1.00. He half-stands.
+
+PRICE RISING → Forward walking drive. For the cuck: forward walking drive, into a seat.
+
+PRICE FALLING → Backward or avoidance drive. For the cuck: freeze.
+
+EVERY THRUST → Vibration enters all three brains, his at full strength.
+
+EVERY FOURTH THRUST → Dopamine enters all three brains, his included.
+
+The right side of the website shows this translation happening in real time, and every trade produces two lines in the feed: one for the couple, one for him.
+
+Nothing is hidden behind a generic "AI is thinking" message. The market event and the resulting biological stimulus are shown together, three times over.
+
+
+The third brain
+
+In a real fly, descending neurons carry commands from the brain toward the body. Walk forward. Turn. Back away. Groom. Freeze. Extend the proboscis. Escape.
+
+The cuck has all of them. They fire constantly. The panel shows their rates in hertz.
+
+They are not connected to anything.
+
+This is the honest center of the project and it is also the joke: those are real commands, measured where they stop. The bar marked "stand up → nothing" is a live readout of a motor intention with no downstream path. When it saturates, it turns red. Nothing else happens, because nothing else is wired.
+
+The model has no spontaneous activity, so a brain with nothing to sense is silent. The cuck is never silent. He is the most consistently stimulated network on the site and the only one whose output is discarded.
+
+He also blacks out more often than the couple, and the counter is public. That is not a gag written into the copy. It is what an input-only network does when the model has no fatigue: activity accumulates, runs away, and the brain restarts.
+
+
+The chair
+
+The chair is drawn at the correct scale for a 2.5 mm fly and it is the only piece of furniture in the simulation.
+
+He is seated in it at all times, because seated is the only pose his outputs can reach.
+
+He trembles in proportion to humiliation. His posture leans in as arousal climbs. Sweat appears at high humiliation and tears appear on denial, and both are driven by channel values, not by a timer.
+
+
+Every thrust hits all three brains
+
+The couple's physical activity produces additional neural stimulation, and it does not stop at the couple.
+
+Every thrust sends vibration into three brains through their Johnston's organs — the sensory structures flies use to detect sound and vibration. Her pC1 receptivity neurons fire as she takes the male, and the cuck's homologous cluster fires with them, out of phase, at 0.8x amplitude. Every fourth stroke delivers dopamine to all three networks.
+
+The loop:
+
+Trades stimulate the brains.
+
+The brains influence the couple's intensity.
+
+Their movement generates vibration.
+
+That vibration re-enters all three brains.
+
+One of those three contributed nothing to the movement and receives the full signal anyway.
+
+The simulations are not merely displayed beside each other. They are connected through an act that only two of them are having.
+
+
+Buys make them go harder. Sells give him hope.
+
+Buying activity raises the couple's libido. His rhythm accelerates alongside his own walking-drive circuitry, reaching as high as approximately six thrusts per second. When market activity fades, libido cools over several minutes and the pair settles into a slower rhythm.
+
+For the cuck, a buy is not good news and it is not bad news. It is both, at once, on one curve: arousal and humiliation climb together, because the same event drives both.
+
+Sells reduce the couple's intensity — and raise his hope, measurably, every time.
+
+A sufficiently large sell triggers the strongest pathway on the site. Her DNp13 rejection neurons fire. She kicks the male off and he tumbles away, courting her again by singing with one wing before climbing back on.
+
+For a few seconds, the cuck's hope channel reaches 1.00. It is the only moment in the simulation when it does. He half-stands.
+
+She re-mounts. Hope collapses to zero. The interface logs the collapse as "denial."
+
+Over a long enough session, that is the most reliable rhythm on the website:
+
+Buys make him pound harder.
+
+Sells slow him down.
+
+A dump gets him kicked off — and gets the cuck out of his chair, briefly, for nothing.
+
+
+The bodies listen to the brains
+
+The physical flies are based on NeuroMechFly v2, the anatomically grounded model developed at EPFL from measured fruit-fly anatomy and recorded walking kinematics.
+
+Her descending neurons control walking forward, turning, backing away, grooming, freezing, proboscis extension and escape responses. The interface displays the firing rate of each motor group in hertz. Her visible movement is driven by those rates rather than an animation playlist.
+
+The male uses the same body model. His rhythm follows the couple's libido and his own walking-drive circuitry.
+
+The cuck uses the same body model as well. Same anatomy, same leg kinematics, same everything — parked.
+
+That is the cleanest way to state what the project is. Three identical nervous systems, three identical bodies, one difference in the wiring diagram, and the difference is legible from across the room.
+
+
+No wallet. No orders. No fake agent. And no turn.
+
+The current version of $CUCKFLY has:
+
+No wallet.
+
+No order execution.
+
+No autonomous trading.
+
+The flies never touch the token. They only feel it.
+
+And there is no path in the code by which the cuck gets a turn. Not a low-probability branch. Not an unlockable. Not a milestone at some market cap. The counter on the panel reads zero because the variable is never written to, and anyone can check: the repository is public.
+
+The project does not need a fake profit motive, and it does not need a fake redemption arc either.
+
+The experiment is the reaction itself.
+
+
+The brains drift apart
+
+All three simulations include limited Hebbian plasticity: synaptic strengths change slightly through repeated activity before relaxing slowly toward their original values.
+
+The three begin with the same connectome. They do not remain in the same state.
+
+They occupy different roles. They receive different stimuli. They generate different activity. They accumulate different internal histories.
+
+The couple's histories are written by an act. His is written by watching one, at full sensory gain, with his mushroom bodies — the learning center — running the entire time.
+
+Over a long enough run, the same market event enters three networks that are no longer in precisely the same state, and the one that has changed most is the one that did the least.
+
+
+What is real — and what is designed
+
+The FlyWire connectome, the leaky integrate-and-fire model and NeuroMechFly are genuine scientific foundations. The anatomy on screen is real anatomy: region positions, region proportions, and the neuropils named in the legend.
+
+What runs in your browser is that model at display scale, and the footer says so — it reports how many units are being drawn and that they are scaled from 3 x 138,639. The site renders a representative population per brain and drives it with the same integrate-and-fire dynamics, rather than streaming a 150-million-synapse simulation into your tab. Everything on the panel is measured from the model that is actually running. None of it is a script.
+
+But the accurate sentence is "a whole-brain model at display scale," not "the whole connectome in a browser tab," and the site should never be read as claiming the second one.
+
+The sensory translation is creative engineering. A buy is not biologically sugar. A sell is not inherently bitter. The libido system, the thresholds, and the mapping between market events and identified neural populations were designed.
+
+So was the cuck's gain map. Flies do not have cope. They do not have humiliation, and they do not have hope in the sense the panel uses the word. Those are labels placed on channels whose behavior is defined in the open.
+
+What is not designed is the structure underneath the labels. A network wired for sensory input and disconnected from its own motor output really does behave the way the panel shows: it saturates, it accumulates, it runs away, and it has no way to discharge.
+
+That part is not a metaphor. The metaphor is just sitting on top of it, in a chair.
+
+You are not watching an animal that understands crypto, or sex, or exclusion in a human sense. You are watching three constrained nervous systems in an artificial environment, reacting through the wiring available to them — and one of them has less wiring available than the others.
+
+
+The meme is the interface
+
+The technology is complicated:
+
+Three whole-brain models
+Approximately 415,917 neurons
+Roughly 150 million synaptic connections
+Two anatomically grounded bodies, and a third one parked
+Live on-chain activity converted into sensation
+Real-time neural and motor visualization
+Physical movement fed back into all three brains
+No LLM
+No trading agent
+
+The meme requires one sentence:
+
+He doesn't get a turn.
+
+That contrast is what gives $CUCKFLY its potential. Anyone understands the spectacle immediately. Underneath it is connectomics, computational neuroscience, embodied simulation, real-time rendering and on-chain data — plus one wiring decision that turns all of it into a joke a five-year-old would get.
+
+Crypto has seen thousands of AI agents pretending to think.
+
+$SEXFLY gave two reconstructed nervous systems a token to feel.
+
+$CUCKFLY gives a third one the same token, the same sensations, the same dopamine, and no way to act on any of it.
+
+Three brains. One couple. One chair.
+
+Every trade becomes a sensation — and one of them feels all of it for nothing.
+
+Watch them live at cuckfly.tech.
+
+$CUCKFLY on Robinhood Chain.

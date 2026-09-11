@@ -39,6 +39,7 @@ js/flyart.js        fly + chair renderer, shared with the graphics generator
 js/brain.js         neuron cloud: generation, spiking, projection
 js/market.js        GeckoTerminal reader, with a simulated tape until launch
 js/app.js           state, the trade→sense map, the loop, the panel
+ARTICLE.txt         the long-form piece, plain text, ready to paste into X
 tools/banner.html   regenerates static/banner.png, og.png and pfp.png
 static/             banner (1500×500), og card (1200×630), profile picture (400×400)
 netlify.toml
@@ -66,7 +67,10 @@ every real trade lands in three brains.
 ## Regenerating the graphics
 
 Serve the repo and open `tools/banner.html` — it draws the banner, the OG card and the
-profile picture from the same renderer the site uses. To write them to disk, run any local
+profile picture from the same renderer the site uses. It also renders two crop previews that
+are not exported to `static/`: the avatar inside the circle X crops it to, and the header
+with X's trim and the avatar overlay drawn on top, so the safe area can be checked rather
+than guessed at. To write them to disk, run any local
 endpoint that accepts a POSTed data URL on `127.0.0.1:8898`, or right-click each canvas and
 save it.
 
