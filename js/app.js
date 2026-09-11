@@ -282,7 +282,7 @@
       bctx.globalAlpha = clamp(p.l, 0, 1);
       if (p.k === 'sweat') { bctx.fillStyle = '#9fd8ff'; bctx.beginPath(); bctx.ellipse(p.x, p.y, 1.6, 2.6, 0, 0, 6.283); bctx.fill(); }
       else if (p.k === 'tear') { bctx.fillStyle = '#7dffc4'; bctx.beginPath(); bctx.ellipse(p.x, p.y, 1.5, 3, 0, 0, 6.283); bctx.fill(); }
-      else { bctx.fillStyle = '#ff4f9a'; bctx.font = '13px ' + getComputedStyle(document.body).fontFamily; bctx.fillText('♥', p.x, p.y); }
+      else FlyArt.pixelHeart(bctx, p.x, p.y, Math.max(1, s * 0.055), '#ff4f9a', true);
       bctx.globalAlpha = 1;
     }
 

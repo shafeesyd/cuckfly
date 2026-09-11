@@ -22,10 +22,11 @@ var TAU = 6.2831853;
 function bg(ctx, W, H, tilt) {
   ctx.fillStyle = '#05030a';
   ctx.fillRect(0, 0, W, H);
-  var g = ctx.createRadialGradient(W * 0.62, H * 0.42, 10, W * 0.62, H * 0.42, W * 0.72);
-  g.addColorStop(0, '#4a0f3c');
-  g.addColorStop(0.42, '#2a0a2e');
-  g.addColorStop(1, '#05030a');
+  var g = ctx.createRadialGradient(W * 0.63, H * 0.50, 8, W * 0.63, H * 0.52, W * 0.46);
+  g.addColorStop(0, '#5f1f72');
+  g.addColorStop(0.34, '#3a1044');
+  g.addColorStop(0.68, '#1a0820');
+  g.addColorStop(1, '#07040c');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   /* cold pool where the chair sits */
   var c = ctx.createRadialGradient(W * 0.86, H * 0.66, 6, W * 0.86, H * 0.66, W * 0.3);
@@ -42,21 +43,13 @@ function bg(ctx, W, H, tilt) {
   for (var y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
 }
 
+/* three pixel hearts in a loose arc, the way theirs sit over the couple */
 function hearts(ctx, x, y, s, n, col) {
-  ctx.save();
-  ctx.textAlign = 'center';
-  for (var i = 0; i < n; i++) {
-    var a = (i / n) * TAU + 0.7;
-    var hx = x + Math.cos(a) * s * (0.5 + (i % 3) * 0.25);
-    var hy = y - Math.abs(Math.sin(a)) * s * 0.9 - i * s * 0.1;
-    var sz = s * (0.16 + (i % 3) * 0.05);
-    ctx.font = sz + 'px system-ui, sans-serif';
-    ctx.shadowColor = col; ctx.shadowBlur = sz * 0.9;
-    ctx.fillStyle = col;
-    ctx.globalAlpha = 0.55 + (i % 3) * 0.15;
-    ctx.fillText('♥', hx, hy);
+  var lay = [[-0.62, 0.10, 0.030], [0.02, -0.16, 0.036], [0.64, 0.06, 0.028],
+             [-0.28, -0.40, 0.022], [0.40, -0.44, 0.020]];
+  for (var i = 0; i < n && i < lay.length; i++) {
+    FlyArt.pixelHeart(ctx, x + lay[i][0] * s, y + lay[i][1] * s, Math.max(1, s * lay[i][2]), col, true);
   }
-  ctx.restore();
 }
 
 /* couple + chair, positioned inside a box */
@@ -69,11 +62,11 @@ function scene(ctx, cx, cy, s, opts) {
     x: cx - s * 0.02, y: cy - s * 0.55, s: s * 0.9, phase: 1.9,
     tilt: 0.12, legLift: 0.55, wingBeat: 1.1
   });
-  hearts(ctx, cx + s * 0.15, cy - s * 1.0, s, 5, '#ff4f9a');
+  hearts(ctx, cx + s * 0.15, cy - s * 1.12, s, 5, '#ff4f9a');
 
   /* the chair, to the right */
   if (opts.chair !== false) {
-    var ox = cx + s * (opts.gap || 2.5), oy = cy + s * 0.08, cs = s * 1.3;
+    var ox = cx + s * (opts.gap || 2.5), oy = cy + s * 0.06, cs = s * 1.2;
     FlyArt.shadow(ctx, ox, oy + cs * 0.8, cs * 1.35, cs * 0.22, 0.6);
     FlyArt.drawChair(ctx, ox, oy, cs, 'rgba(125,255,196,.3)');
     FlyArt.drawFly(ctx, {
@@ -81,7 +74,7 @@ function scene(ctx, cx, cy, s, opts) {
       phase: 2.2, seated: 1, tilt: 0.3, headTilt: -0.2, tint: 0.6, flip: true
     });
     /* one green heart, cracked down the middle */
-    hearts(ctx, ox - cs * 0.1, oy - cs * 1.25, s * 0.8, 2, '#7dffc4');
+    hearts(ctx, ox + cs * 0.05, oy - cs * 1.82, s * 0.7, 2, '#7dffc4');
   }
 }
 
@@ -139,20 +132,40 @@ function drawOg() {
 
 function drawPfp() {
   var cv = document.getElementById('pfp'), ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  /* violet ground, same family as the couple's own avatar */
   ctx.fillStyle = '#07040c'; ctx.fillRect(0, 0, W, H);
-  var g = ctx.createRadialGradient(W * 0.5, H * 0.45, 8, W * 0.5, H * 0.5, W * 0.7);
-  g.addColorStop(0, '#123a30'); g.addColorStop(0.5, '#16092a'); g.addColorStop(1, '#07040c');
+  var g = ctx.createRadialGradient(W * 0.46, H * 0.42, 8, W * 0.5, H * 0.5, W * 0.78);
+  g.addColorStop(0, '#7a2c93'); g.addColorStop(0.34, '#4c1557');
+  g.addColorStop(0.7, '#200a28'); g.addColorStop(1, '#07040c');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  var s = H * 0.235, cs = s * 1.45;
-  FlyArt.shadow(ctx, W * 0.5, H * 0.60 + cs * 0.82, cs * 1.3, cs * 0.22, 0.6);
-  FlyArt.drawChair(ctx, W * 0.5, H * 0.60, cs, 'rgba(125,255,196,.35)');
+
+  /* the couple, big and cropped, exactly the framing of theirs */
+  var s = H * 0.30, gx = W * 0.40, gy = H * 0.62;
+  FlyArt.shadow(ctx, gx - s * 0.1, gy + s * 0.52, s * 1.2, s * 0.2, 0.5);
+  FlyArt.drawFly(ctx, { x: gx, y: gy, s: s, phase: 0.6, tilt: 0.03 });
   FlyArt.drawFly(ctx, {
-    x: W * 0.5 + cs * 0.12, y: H * 0.60 - cs * 0.36, s: s,
+    x: gx - s * 0.03, y: gy - s * 0.56, s: s * 0.9, phase: 1.9,
+    tilt: 0.12, legLift: 0.55, wingBeat: 1.1
+  });
+  hearts(ctx, gx + s * 0.1, gy - s * 1.24, s, 3, '#ff4f9a');
+
+  /* and the one watching: in the near corner, in shadow, green-eyed */
+  var cs = s * 0.82, cx = W * 0.90, cy = H * 0.94;
+  ctx.save();
+  ctx.globalAlpha = 0.5;                       /* the chair stays in the dark */
+  FlyArt.drawChair(ctx, cx, cy, cs, null);
+  ctx.restore();
+  var hg = ctx.createRadialGradient(cx - cs * 0.35, cy - cs * 0.45, 2, cx - cs * 0.35, cy - cs * 0.45, cs * 1.1);
+  hg.addColorStop(0, 'rgba(90,255,190,.3)'); hg.addColorStop(1, 'rgba(90,255,190,0)');
+  ctx.fillStyle = hg; ctx.fillRect(0, 0, W, H);
+  FlyArt.drawFly(ctx, {
+    x: cx + cs * 0.06, y: cy - cs * 0.36, s: s * 0.54,
     phase: 2.2, seated: 1, tilt: 0.3, headTilt: -0.22, tint: 0.6, flip: true
   });
-  /* vignette so the eye is the brightest thing in the circle */
-  var vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.22, W / 2, H / 2, H * 0.62);
-  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.8)');
+
+  /* vignette, so the two red eyes and the one green eye are what survives at 48px */
+  var vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.26, W / 2, H / 2, H * 0.66);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.72)');
   ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
   post('pfp', cv);
 }

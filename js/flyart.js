@@ -36,10 +36,10 @@
   function wing(ctx, x, y, s, ang, len, alpha, blur) {
     ctx.save();
     ctx.translate(x, y); ctx.rotate(ang);
-    var g = ctx.createLinearGradient(0, 0, len * s, 0);
-    g.addColorStop(0, 'rgba(208,216,230,' + (0.30 * alpha) + ')');
-    g.addColorStop(0.55, 'rgba(176,188,208,' + (0.17 * alpha) + ')');
-    g.addColorStop(1, 'rgba(150,164,190,' + (0.06 * alpha) + ')');
+    var g = ctx.createLinearGradient(0, -0.2 * s, len * s * 0.8, 0.12 * s);
+    g.addColorStop(0, 'rgba(206,212,222,' + (0.9 * alpha) + ')');
+    g.addColorStop(0.5, 'rgba(146,154,168,' + (0.82 * alpha) + ')');
+    g.addColorStop(1, 'rgba(92,100,116,' + (0.7 * alpha) + ')');
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -49,8 +49,11 @@
     if (blur) { ctx.shadowColor = 'rgba(200,214,240,.45)'; ctx.shadowBlur = 7; }
     ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.strokeStyle = 'rgba(226,234,248,' + (0.18 * alpha) + ')';
-    ctx.lineWidth = Math.max(0.5, s * 0.011);
+    ctx.strokeStyle = 'rgba(58,64,78,' + (0.75 * alpha) + ')';
+    ctx.lineWidth = Math.max(0.6, s * 0.012);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(90,100,118,' + (0.5 * alpha) + ')';
+    ctx.lineWidth = Math.max(0.5, s * 0.009);
     for (var v = 0; v < 3; v++) {
       ctx.beginPath();
       ctx.moveTo(len * s * 0.06, -0.004 * s + v * 0.026 * s);
@@ -75,10 +78,10 @@
     ctx.scale(flip, 1);
 
     var hue = 24 + tint * 100;
-    var dark = 'hsl(' + hue + ',' + (30 - tint * 6) + '%,' + (10 + tint * 3) + '%)';
-    var mid = 'hsl(' + (hue + 2) + ',' + (32 - tint * 6) + '%,' + (18 + tint * 5) + '%)';
-    var lite = 'hsl(' + (hue + 6) + ',' + (30 - tint * 4) + '%,' + (30 + tint * 7) + '%)';
-    var legc = 'hsl(' + hue + ',26%,' + (16 + tint * 5) + '%)';
+    var dark = 'hsl(' + hue + ',' + (24 - tint * 4) + '%,' + (7 + tint * 3) + '%)';
+    var mid = 'hsl(' + (hue + 2) + ',' + (25 - tint * 4) + '%,' + (14 + tint * 5) + '%)';
+    var lite = 'hsl(' + (hue + 6) + ',' + (24 - tint * 3) + '%,' + (26 + tint * 7) + '%)';
+    var legc = 'hsl(' + hue + ',22%,' + (14 + tint * 5) + '%)';
 
     /* ---------- far legs ---------- */
     ctx.globalAlpha = alpha * 0.5;
@@ -121,11 +124,26 @@
     ctx.fillStyle = sh;
     ctx.beginPath(); ctx.ellipse(-0.44 * s, -0.15 * s, 0.36 * s, 0.17 * s, -0.15, 0, TAU); ctx.fill();
 
+    /* light patches on the cuticle, like the specular marks on the render */
+    ctx.globalAlpha = alpha * 0.34;
+    ctx.fillStyle = 'hsl(' + (hue + 12) + ',14%,' + (58 + tint * 8) + '%)';
+    var spots = [[-0.33, 0.09, 0.035, 0.019], [-0.63, -0.04, 0.026, 0.015], [-0.16, 0.17, 0.022, 0.013]];
+    for (var sp = 0; sp < spots.length; sp++) {
+      ctx.beginPath();
+      ctx.ellipse(spots[sp][0] * s, spots[sp][1] * s, spots[sp][2] * s, spots[sp][3] * s, -0.3, 0, TAU);
+      ctx.fill();
+    }
+    ctx.globalAlpha = alpha;
+
     /* ---------- thorax ---------- */
     var tg = ctx.createLinearGradient(-0.1 * s, -0.36 * s, 0.36 * s, 0.26 * s);
     tg.addColorStop(0, lite); tg.addColorStop(0.5, mid); tg.addColorStop(1, dark);
     ctx.fillStyle = tg;
     ctx.beginPath(); ctx.ellipse(0.08 * s, -0.02 * s, 0.38 * s, 0.30 * s, -0.1, 0, TAU); ctx.fill();
+    ctx.globalAlpha = alpha * 0.34;
+    ctx.fillStyle = 'hsl(' + (hue + 12) + ',14%,' + (62 + tint * 6) + '%)';
+    ctx.beginPath(); ctx.ellipse(0.15 * s, -0.15 * s, 0.045 * s, 0.024 * s, -0.35, 0, TAU); ctx.fill();
+    ctx.globalAlpha = alpha;
     ctx.strokeStyle = 'rgba(10,8,6,.85)';
     ctx.lineWidth = Math.max(0.6, s * 0.016);
     for (var i = 0; i < 6; i++) {
@@ -230,6 +248,29 @@
     ctx.restore();
   }
 
+  /* an 8-bit heart, drawn as blocks — the same shape their hearts use */
+  var HEART = [
+    '.XX.XX.',
+    'XXXXXXX',
+    'XXXXXXX',
+    '.XXXXX.',
+    '..XXX..',
+    '...X...'
+  ];
+  function pixelHeart(ctx, x, y, px, col, glow) {
+    ctx.save();
+    if (glow) { ctx.shadowColor = col; ctx.shadowBlur = px * 2.2; }
+    ctx.fillStyle = col;
+    for (var r = 0; r < HEART.length; r++) {
+      for (var c = 0; c < HEART[r].length; c++) {
+        if (HEART[r][c] !== 'X') continue;
+        ctx.fillRect(Math.round(x + (c - 3.5) * px), Math.round(y + (r - 3) * px),
+          Math.ceil(px), Math.ceil(px));
+      }
+    }
+    ctx.restore();
+  }
+
   function shadow(ctx, x, y, w, h, a) {
     var g = ctx.createRadialGradient(x, y, 1, x, y, w);
     g.addColorStop(0, 'rgba(0,0,0,' + (a || 0.55) + ')');
@@ -242,6 +283,7 @@
 
   root.FlyArt = {
     drawFly: drawFly, drawChair: drawChair, wing: wing, leg: leg, shadow: shadow,
+    pixelHeart: pixelHeart,
     EYE_RED: EYE_RED, EYE_GREEN: EYE_GREEN
   };
 })(typeof window !== 'undefined' ? window : this);
