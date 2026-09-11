@@ -491,7 +491,14 @@
 
   var cfg = window.CUCKFLY_CFG || {};
   if (cfg.ca) $('caTxt').textContent = cfg.ca.slice(0, 6) + '…' + cfg.ca.slice(-4);
-  if (cfg.x) $('xLink').href = cfg.x;
+  if (cfg.x) {
+    $('xLink').href = cfg.x;
+    var fx = $('footX');
+    if (fx) {
+      fx.href = cfg.x;
+      fx.textContent = '@' + cfg.x.replace(/\/+$/, '').split('/').pop();
+    }
+  }
   $('feedMode').textContent = cfg.pool ? 'live via GeckoTerminal' : 'simulated until launch';
   $('liveTop').className = 'live on';
   $('liveTxt').textContent = 'LIVE';

@@ -6,5 +6,5 @@ window.CUCKFLY_CFG = {
   ca: '',
   pool: '',
   network: 'robinhood',
-  x: 'https://x.com/'
+  x: 'https://x.com/cuckfly'
 };
